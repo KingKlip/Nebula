@@ -2,6 +2,7 @@
   "expo": {
     "name": "Nebula",
     "slug": "Nebula",
+   
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
@@ -15,7 +16,9 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+        
+      },
+       "softwareKeyboardLayoutMode": "pan"
     },
     "web": {
       "bundler": "metro",
@@ -32,8 +35,14 @@
           "resizeMode": "contain",
           "backgroundColor": "#ffffff"
         }
-      ]
-    ],
+      ],
+      [
+      "expo-video",
+      {
+          "supportsBackgroundPlayback": true,
+          "supportsPictureInPicture": true
+        }
+    ]],
     "experiments": {
       "typedRoutes": true
     }
