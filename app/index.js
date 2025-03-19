@@ -4,37 +4,57 @@ import AuthNavigator from "../src/navigation/StackNavigator"; // SignUp and Logi
 import  BottomTabs from '../src/navigation/BottomTabNavigation'; // Main App Navigation
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "./firebase"; // Your Firebase setup
+import AsyncStorage from "@react-native-async-storage/async-storage";
+
+import GooglePlacesAutocompleteScreen from "../Screens/Home/SetLocation"
+
 
 export default function App() {
   const Stack = createStackNavigator();
-  const [user, setUser] = useState(null); // Track authentication state
+  const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [firstLogin, setFirstLogin] = useState(false);
+
+  // Check if the user has set their location before
+  useEffect(() => {
+    const checkFirstLogin = async () => {
+      const hasSetLocation = await AsyncStorage.getItem("hasSetLocation");
+      setFirstLogin(hasSetLocation !== "true"); // firstLogin = true if no location is set
+    };
+
+    checkFirstLogin();
+  }, []);
 
   // Listen to authentication changes
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+    const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
       setUser(currentUser);
-      setLoading(false); // Finish loading when the auth state is resolved
+      setLoading(false);
     });
 
-    return () => unsubscribe(); // Cleanup listener on unmount
+    return () => unsubscribe();
   }, []);
 
-  if (loading) {
-    return null; // Optionally show a loading spinner while checking auth
-  }
+  if (loading) return null;
 
- 
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }}>
       {user ? (
-        <Stack.Screen name="App" component={BottomTabs} />
+        firstLogin ? (
+          <Stack.Screen
+            name="SetLocation"
+            component={GooglePlacesAutocompleteScreen}
+            options={{ headerShown: false }}
+          />
+        ) : (
+          <Stack.Screen name="App" component={BottomTabs} />
+        )
       ) : (
         <Stack.Screen name="Auth" component={AuthNavigator} />
       )}
     </Stack.Navigator>
   );
-};
+}
 
 
 

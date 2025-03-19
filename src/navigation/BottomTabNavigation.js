@@ -4,11 +4,12 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { View, Text, Button } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import SignUpPage from "../../app/signup";
-import Homepage from '@/Screens/Home/HomeScreen';
+ 
 import Icon from 'react-native-vector-icons/Ionicons'; 
 import UploadMediaFile from '../../app/post' 
 import OptionsMenu from '@/components/features/Menu';
 import ProfilePage from '../../app/myprofilepage';
+import Homepage from '@/Screens/Home/HomeScreen';
 const Tab = createBottomTabNavigator();
 
   function BottomTabs() {
@@ -16,10 +17,12 @@ const Tab = createBottomTabNavigator();
    
         <Tab.Navigator
           screenOptions={({ route }) => ({
+            headerShown:false,
             tabBarIcon: ({ focused, color, size }) => {
               let iconName;
   
               if (route.name === 'Home') {
+
                 iconName = focused ? 'home' : 'home-outline';
               } else if (route.name === 'Profile') {
                 iconName = focused ? 'person' : 'person-outline';
@@ -43,7 +46,7 @@ const Tab = createBottomTabNavigator();
           <Tab.Screen name="Home" component={SignUpPage} />
 
           <Tab.Screen name="Profile" component={ProfilePage} />
-          <Tab.Screen name="Settings" component={OptionsMenu} />
+          <Tab.Screen name="Settings" component={Homepage} />
           <Tab.Screen name="Post" component={UploadMediaFile} />
         </Tab.Navigator>
     

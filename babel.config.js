@@ -1,5 +1,9 @@
+ 
 module.exports = {
-    presets: ['module:metro-react-native-babel-preset'],
-    plugins: [],
-  };
-  
+  presets: ["babel-preset-expo"],
+  plugins: [
+    "expo-router/babel", 
+    
+    
+  ]
+};

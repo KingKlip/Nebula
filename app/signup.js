@@ -7,12 +7,13 @@ import { createUserWithEmailAndPassword} from '@firebase/auth'
 import {auth} from  "./firebase.js";
 import { Link } from "expo-router";
 import { setDoc,doc } from "firebase/firestore";
- 
- 
+
+
     const SignUpPage=() =>{
         const [name, setName] = useState("");
         const [email, setEmail] = useState("");
         const [password, setPassword] = useState("");
+        const [address, setAdress] = useState("")
             
             const handleSignUp = async () => {
                 try {
@@ -44,6 +45,7 @@ import { setDoc,doc } from "firebase/firestore";
            Create account
         </Text>
     </View>
+    
 
     <View style={{paddingBottom:20}}>
 
@@ -70,8 +72,9 @@ import { setDoc,doc } from "firebase/firestore";
          onChangeText={(text)=>setPassword(text)}
          
          /> 
-     </View>
+    </View>
 
+ 
 <View style={styles.buttonContainer}> 
 <TouchableOpacity style={styles.customButton} onPress={handleSignUp}>
           <Text style={styles.buttonText}>Sign up</Text>
@@ -98,9 +101,7 @@ const styles= StyleSheet.create({
     container: {
         marginHorizontal : 40,
         marginVertical: 10,
-         
-         
-        
+               
     },
 
     welcome:{
@@ -112,6 +113,7 @@ const styles= StyleSheet.create({
   buttonContainer: {
     alignItems: "center",
      // Centers the button horizontally
+     paddingTop:70
   },
 
   customButton: {
@@ -141,3 +143,4 @@ const styles= StyleSheet.create({
 
 })
 export default SignUpPage
+ 

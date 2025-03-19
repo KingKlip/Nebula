@@ -3,17 +3,23 @@ import {View, Text, TextInput, TouchableOpacity, StyleSheet} from 'react-native'
 import { useState } from 'react';
 import { auth } from './firebase'; // Your Firebase configuration fil
 import { useNavigation} from '@react-navigation/native';
+import { getAuth } from 'firebase/auth';
 
 const LoginPage = () => {
   const navigation = useNavigation();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-
+     
 const loginUser = async (email,password) => {
   try {
+    const auth = getAuth()
     const userCredential = await signInWithEmailAndPassword(auth, email, password);
+    const user = userCredential.user;
+    const idToken = await user.getIdToken();
+
+    console.log('User ID token:', idToken);
     console.log('User logged in:', userCredential.user);
-    navigation.navigate('myprofilepage') 
+     
   } catch (error) {
     console.error('Login error:', error.message);
   }
